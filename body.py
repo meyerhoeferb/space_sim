@@ -35,8 +35,8 @@ class Body:
 
     def draw(self, win: pygame.Surface, scale: float, w: int, h: int):
         # scale the current position and center on window
-        x = self.x * scale + w / 2
-        y = self.y * scale + h / 2
+        curr_x = self.x * scale + w / 2
+        curr_y = self.y * scale + h / 2
 
         # draw orbital path
         if len(self.orbit) >= 2:
@@ -49,7 +49,7 @@ class Body:
 
             pygame.draw.lines(win, self.color, False, to_draw_orbit, 2)
 
-        pygame.draw.circle(win, self.color, (x, y), self.radius)
+        pygame.draw.circle(win, self.color, (curr_x, curr_y), self.radius)
 
     def attraction(self, other: Body) -> Tuple[float, float]:
         """calculate the force of attraction in x and y direction between this body and some other body
