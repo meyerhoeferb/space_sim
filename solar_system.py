@@ -9,7 +9,7 @@ WIDTH, HEIGHT = 1000, 1000
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("The Solar System")
 
-SCALE = 150 / Body.AU  # at 250, 1au = 100 pixels
+SCALE = 50 / Body.AU  # at 250, 1au = 100 pixels
 TIMESTEP = 3600 * 24  # 1 day in seconds
 
 BLACK = (0, 0, 0)
@@ -19,6 +19,7 @@ BLUE = (100, 149, 237)
 RED = (188, 39, 50)
 DARK_GREY = (80, 78, 81)
 PINK = (255, 182, 193)
+ORANGE = (255, 127, 80)
 
 FONT = pygame.font.SysFont("comicsans", 16)
 
@@ -29,18 +30,32 @@ def main():
     clock = pygame.time.Clock()  # clock controls how fast the game runs
 
     # initialize our bodies
-    sun = Body("sun", 0, 0, 30, YELLOW, 1.98892 * 10**30, FONT, True)
+    sun = Body("sun", 0, 0, 10, YELLOW, 1.98892 * 10**30, FONT, True)
     earth = Body(
-        "earth", -1 * Body.AU, 0, 16, BLUE, 5.9742 * 10**24, FONT, i_vy=29.783 * 1000
+        "earth",
+        -1 * Body.AU,
+        0,
+        4,
+        BLUE,
+        5.9742 * 10**24,
+        FONT,
+        i_vy=29.783 * 1000,
     )
     mars = Body(
-        "mars", -1.524 * Body.AU, 0, 12, RED, 6.39 * 10**23, FONT, i_vy=24.077 * 1000
+        "mars",
+        -1.524 * Body.AU,
+        0,
+        3.5,
+        RED,
+        6.39 * 10**23,
+        FONT,
+        i_vy=24.077 * 1000,
     )
     mercury = Body(
         "mercury",
         0.387 * Body.AU,
         0,
-        8,
+        1,
         DARK_GREY,
         3.3 * 10**23,
         FONT,
@@ -50,14 +65,24 @@ def main():
         "venus",
         0.723 * Body.AU,
         0,
-        14,
+        3,
         PINK,
         4.8685 * 10**24,
         FONT,
         i_vy=-35.02 * 1000,
     )
+    jupiter = Body(
+        "jupiter",
+        -5.2 * Body.AU,
+        0,
+        10,
+        ORANGE,
+        1898 * 10**24,
+        FONT,
+        i_vy=13.1 * 1000,
+    )
 
-    bodies = [sun, earth, mars, mercury, venus]
+    bodies = [sun, earth, mars, mercury, venus, jupiter]
 
     while run:
         clock.tick(60)  # loop will run at most 60 times a second
