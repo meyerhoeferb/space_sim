@@ -4,6 +4,8 @@ from typing import Tuple, List
 import pygame
 import math
 
+WHITE = (255, 255, 255)
+
 
 class Body:
     AU = 149.6e6 * 1000  # 1 AU in m
@@ -11,17 +13,20 @@ class Body:
 
     def __init__(
         self,
+        name: str,
         x: float,
         y: float,
         radius: float,
         color: Tuple[int],
         mass: float,
+        font: pygame.font.SysFont,
         i_vx: float = 0,
         i_vy: float = 0,
         is_sun: bool = False,
     ) -> None:
         self.x = x
         self.y = y
+        self.name = name
         self.radius = radius  # r of body in m
         self.color = color
         self.mass = mass  # mass of body in kg
@@ -32,6 +37,8 @@ class Body:
 
         self.x_vel = i_vx  # in m/s
         self.y_vel = i_vy
+
+        self.name_text = font.render(self.name, 1, WHITE)
 
     def draw(self, win: pygame.Surface, scale: float, w: int, h: int):
         # scale the current position and center on window
@@ -50,6 +57,13 @@ class Body:
             pygame.draw.lines(win, self.color, False, to_draw_orbit, 2)
 
         pygame.draw.circle(win, self.color, (curr_x, curr_y), self.radius)
+        win.blit(
+            self.name_text,
+            (
+                curr_x - self.name_text.get_width() / 2,
+                curr_y - self.name_text.get_height() / 2,
+            ),
+        )
 
     def attraction(self, other: Body) -> Tuple[float, float]:
         """calculate the force of attraction in x and y direction between this body and some other body
